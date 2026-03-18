@@ -80,6 +80,8 @@ WSGI_APPLICATION = 'research_registry.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+AUTH_USER_MODEL = "accounts.User"
+
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
