@@ -3,16 +3,29 @@ from django.db import models
 
 # Create your models here.
 
-class User(AbstractUser):
-    class Roles(models.TextChoices):
-        ADMIN = "admin", "Admin"
-        RESEARCHER = "researcher", "Researcher"
 
-    role = models.CharField(
-        max_length=20,
-        choices=Roles.choices,
-        default=Roles.RESEARCHER,
+class Role(models.Model):
+    """User role in the system (admin, researcher, etc.)."""
+
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class User(AbstractUser):
+    """Custom user with role relation."""
+
+    role = models.ForeignKey(
+        Role,
+        on_delete=models.PROTECT,
+        related_name="users",
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
-        return f"{self.username} ({self.role})"
+        if self.role:
+            return f"{self.username} ({self.role.name})"
+        return self.username
