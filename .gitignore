@@ -24,8 +24,8 @@ media/
 staticfiles/
 
 # migrations (optional)
-# */migrations/
-# !*/migrations/__init__.py
+*/migrations/
+!*/migrations/__init__.py
 
 # -----------------
 # Environment variables
