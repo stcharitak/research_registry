@@ -13,6 +13,10 @@ class StudyViewSet(ModelViewSet):
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    filterset_fields = ["status", "created_by"]
+    search_fields = ["title", "description"]
+    ordering_fields = ["created_at", "title"]
+
     def get_serializer_class(self):
         if self.action == "list":
             return StudyListSerializer
