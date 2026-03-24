@@ -8,7 +8,6 @@ __pycache__/
 # virtual env
 venv/
 .env/
-.env.*
 .venv/
 
 # pip
