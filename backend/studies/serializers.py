@@ -40,5 +40,4 @@ class StudyWriteSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "status",
-            "created_by",
         ]
