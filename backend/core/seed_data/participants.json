@@ -1,0 +1,18 @@
+[
+  {
+    "code": "P001",
+    "first_name": "Anna",
+    "last_name": "Schmidt",
+    "email": "anna@example.com",
+    "birth_year": 1998,
+    "consent": true
+  },
+  {
+    "code": "P002",
+    "first_name": "Ali",
+    "last_name": "Yilmaz",
+    "email": "ali@example.com",
+    "birth_year": 2001,
+    "consent": true
+  }
+]

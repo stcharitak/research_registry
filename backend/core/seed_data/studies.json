@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Memory Study 2026",
+    "description": "Study about memory performance",
+    "status": "active",
+    "created_by": "researcher1"
+  },
+  {
+    "title": "Sleep Study",
+    "description": "Study about sleep quality",
+    "status": "draft",
+    "created_by": "researcher1"
+  }
+]

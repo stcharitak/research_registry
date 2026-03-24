@@ -1,0 +1,16 @@
+[
+  {
+    "participant": "P001",
+    "study": "Memory Study 2026",
+    "status": "approved",
+    "reviewed_by": "researcher1",
+    "notes": "OK"
+  },
+  {
+    "participant": "P002",
+    "study": "Memory Study 2026",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  }
+]
