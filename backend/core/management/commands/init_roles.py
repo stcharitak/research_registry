@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from accounts.models import RoleName
 from accounts.models import Role
 
 
@@ -7,8 +8,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         roles = [
-            ("admin", "Full access"),
-            ("researcher", "Research user"),
+            (RoleName.ADMIN, "Full access"),
+            (RoleName.RESEARCHER, "Research user"),
         ]
 
         for name, description in roles:

@@ -1,13 +1,16 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
+
+class RoleName(models.TextChoices):
+    ADMIN = "admin", "Admin"
+    RESEARCHER = "researcher", "Researcher"
 
 
 class Role(models.Model):
     """User role in the system (admin, researcher, etc.)."""
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, choices=RoleName.choices)
     description = models.TextField(blank=True)
 
     def __str__(self):

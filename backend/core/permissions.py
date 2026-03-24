@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+from accounts.models import RoleName
 
 
 class IsAdminOrResearcher(BasePermission):
@@ -10,7 +11,7 @@ class IsAdminOrResearcher(BasePermission):
         if not user.role:
             return False
 
-        return user.role.name in ["admin", "researcher"]
+        return user.role.name in [RoleName.ADMIN, RoleName.RESEARCHER]
 
 
 class IsAuthenticatedOrReadOnly(BasePermission):
@@ -19,3 +20,16 @@ class IsAuthenticatedOrReadOnly(BasePermission):
             return True
 
         return bool(request.user and request.user.is_authenticated)
+
+
+class CanAccessApplication(IsAdminOrResearcher):
+    def has_object_permission(self, request, view, obj):
+        user = request.user
+
+        if user.role.name == RoleName.ADMIN:
+            return True
+
+        if user.role.name == RoleName.RESEARCHER:
+            return obj.study.created_by == user
+
+        return False
