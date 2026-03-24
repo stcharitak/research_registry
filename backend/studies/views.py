@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from .models import Study
+from .serializers import StudySerializer
+
+
+class StudyViewSet(ModelViewSet):
+    queryset = Study.objects.all()
+    serializer_class = StudySerializer
