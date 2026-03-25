@@ -20,7 +20,7 @@ class Role(models.Model):
 class UserManager(DjangoUserManager):
     """Overrides Superuser method and on create add admin role."""
 
-    def create_superuser(self, username, password=None, **extra_fields):
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
         user = super().create_superuser(username, password, **extra_fields)
 
         admin_role, _ = Role.objects.get_or_create(
