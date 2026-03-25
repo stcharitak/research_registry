@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import BaseUserManager
 
 
 class RoleName(models.TextChoices):
@@ -17,6 +18,23 @@ class Role(models.Model):
         return str(self.name)
 
 
+class UserManager(BaseUserManager):
+    """Overrides Superuser method and on create add admin role."""
+
+    def create_superuser(self, username, password=None, **extra_fields):
+        user = super().create_superuser(username, password, **extra_fields)
+
+        admin_role, _ = Role.objects.get_or_create(
+            name=RoleName.ADMIN,
+            defaults={"description": "Administrator"},
+        )
+
+        user.role = admin_role
+        user.save()
+
+        return user
+
+
 class User(AbstractUser):
     """Custom user with role relation."""
 
@@ -27,6 +45,8 @@ class User(AbstractUser):
         null=True,
         blank=True,
     )
+
+    objects = UserManager()
 
     def __str__(self):
         if self.role:
