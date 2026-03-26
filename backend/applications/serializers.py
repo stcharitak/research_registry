@@ -27,7 +27,7 @@ class ApplicationWriteSerializer(serializers.ModelSerializer):
 
         application = Application.objects.create(
             **validated_data,
-            created_by=request.user,
+            reviewed_by=request.user,
             status="pending",
         )
 
@@ -37,6 +37,5 @@ class ApplicationWriteSerializer(serializers.ModelSerializer):
         # prevent status change from client
         validated_data.pop("status", None)
         validated_data.pop("reviewed_by", None)
-        validated_data.pop("created_by", None)
 
         return super().update(instance, validated_data)
