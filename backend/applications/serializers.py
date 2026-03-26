@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from studies.serializers import StudyListSerializer
 
-from .models import Application
+from .models import Application, ApplicationLog, ApplicationLogAction
 
 
 class ApplicationReadSerializer(serializers.ModelSerializer):
@@ -32,11 +32,25 @@ class ApplicationWriteSerializer(serializers.ModelSerializer):
             status="pending",
         )
 
+        ApplicationLog.objects.create(
+            application=application,
+            action=ApplicationLogAction.CREATED,
+            performed_by=request.user,
+        )
+
         return application
 
     def update(self, instance, validated_data):
         # prevent status change from client
         validated_data.pop("status", None)
         validated_data.pop("reviewed_by", None)
+        application = super().update(instance, validated_data)
+        request = self.context["request"]
 
-        return super().update(instance, validated_data)
+        ApplicationLog.objects.create(
+            application=application,
+            action=ApplicationLogAction.UPDATED,
+            performed_by=request.user,
+        )
+
+        return application

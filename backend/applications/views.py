@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Application, Status
+from .models import Application, Status, ApplicationLog, ApplicationLogAction
 from accounts.models import RoleName
 from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
 from core.permissions import CanAccessApplication
@@ -40,7 +40,14 @@ class ApplicationViewSet(ModelViewSet):
         application.reviewed_by = request.user
         application.save()
 
+        ApplicationLog.objects.create(
+            application=application,
+            action=ApplicationLogAction.APPROVED,
+            performed_by=request.user,
+        )
+
         serializer = self.get_serializer(application)
+
         return Response(serializer.data)
 
     @action(detail=True, methods=["post"])
@@ -51,5 +58,12 @@ class ApplicationViewSet(ModelViewSet):
         application.reviewed_by = request.user
         application.save()
 
+        ApplicationLog.objects.create(
+            application=application,
+            action=ApplicationLogAction.REJECTED,
+            performed_by=request.user,
+        )
+
         serializer = self.get_serializer(application)
+
         return Response(serializer.data)
