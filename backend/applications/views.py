@@ -6,10 +6,27 @@ from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
 from core.permissions import CanAccessApplication
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from .filters import ApplicationFilter
 
 
 class ApplicationViewSet(ModelViewSet):
     permission_classes = [CanAccessApplication]
+    filterset_class = ApplicationFilter
+
+    search_fields = [
+        "status",
+        "study__id",
+        "participant__id",
+        "reviewed_by__username",
+    ]
+
+    ordering_fields = [
+        "id",
+        "status",
+        "reviewed_by",
+    ]
+
+    ordering = ["-id"]
 
     def get_queryset(self):
         user = self.request.user
