@@ -1,10 +1,11 @@
 from rest_framework import serializers
+from studies.serializers import StudyListSerializer
 
 from .models import Application
 
 
 class ApplicationReadSerializer(serializers.ModelSerializer):
-    study = serializers.StringRelatedField()
+    study = StudyListSerializer()
     participant = serializers.StringRelatedField()
     reviewed_by = serializers.StringRelatedField()
 

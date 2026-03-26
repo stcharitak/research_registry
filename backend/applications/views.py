@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Application, Status
+from accounts.models import RoleName
 from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
 from core.permissions import CanAccessApplication
 from rest_framework.decorators import action
@@ -10,6 +11,20 @@ from rest_framework.response import Response
 class ApplicationViewSet(ModelViewSet):
     queryset = Application.objects.all()
     permission_classes = [CanAccessApplication]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if not user.is_authenticated or not user.role:
+            return Application.objects.none()
+
+        if user.role.name == RoleName.ADMIN:
+            return Application.objects.all()
+
+        if user.role.name == RoleName.RESEARCHER:
+            return Application.objects.filter(study__created_by=user)
+
+        return Application.objects.none()
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:

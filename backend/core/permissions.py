@@ -23,8 +23,25 @@ class IsAuthenticatedOrReadOnly(BasePermission):
 
 
 class CanAccessApplication(IsAdminOrResearcher):
+    def has_permission(self, request, view):
+        user = request.user
+
+        if not super().has_permission(request, view):
+            return False
+
+        if view.action in ["approve", "reject", "destroy"]:
+            return user.role.name == RoleName.ADMIN
+
+        if view.action in ["list", "retrieve", "create", "update", "partial_update"]:
+            return user.role.name in [RoleName.ADMIN, RoleName.RESEARCHER]
+
+        return False
+
     def has_object_permission(self, request, view, obj):
         user = request.user
+
+        if not user.role:
+            return False
 
         if user.role.name == RoleName.ADMIN:
             return True
