@@ -1,44 +1,42 @@
 from rest_framework import serializers
 
 from .models import Application
-from participants.serializers import ParticipantSerializer
-from studies.serializers import StudyListSerializer
 
 
-class ApplicationSerializer(serializers.ModelSerializer):
-    participant_detail = ParticipantSerializer(
-        source="participant",
-        read_only=True,
-    )
-    study_detail = StudyListSerializer(
-        source="study",
-        read_only=True,
-    )
-    reviewed_by_username = serializers.CharField(
-        source="reviewed_by.username",
-        read_only=True,
-    )
+class ApplicationReadSerializer(serializers.ModelSerializer):
+    study = serializers.StringRelatedField()
+    participant = serializers.StringRelatedField()
+    reviewed_by = serializers.StringRelatedField()
 
     class Meta:
         model = Application
+        fields = "__all__"
+
+
+class ApplicationWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
         fields = [
-            "id",
-            "participant",
-            "participant_detail",
             "study",
-            "study_detail",
-            "status",
+            "participant",
             "notes",
-            "reviewed_by",
-            "reviewed_by_username",
-            "created_at",
-            "updated_at",
         ]
-        read_only_fields = [
-            "id",
-            "participant_detail",
-            "study_detail",
-            "reviewed_by_username",
-            "created_at",
-            "updated_at",
-        ]
+
+    def create(self, validated_data):
+        request = self.context["request"]
+
+        application = Application.objects.create(
+            **validated_data,
+            created_by=request.user,
+            status="pending",
+        )
+
+        return application
+
+    def update(self, instance, validated_data):
+        # prevent status change from client
+        validated_data.pop("status", None)
+        validated_data.pop("reviewed_by", None)
+        validated_data.pop("created_by", None)
+
+        return super().update(instance, validated_data)

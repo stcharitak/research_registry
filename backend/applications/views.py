@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Application
-from .serializers import ApplicationSerializer
+from .models import Application, Status
+from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
 from core.permissions import CanAccessApplication
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,14 +9,19 @@ from rest_framework.response import Response
 
 class ApplicationViewSet(ModelViewSet):
     queryset = Application.objects.all()
-    serializer_class = ApplicationSerializer
     permission_classes = [CanAccessApplication]
+
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve"]:
+            return ApplicationReadSerializer
+
+        return ApplicationWriteSerializer
 
     @action(detail=True, methods=["post"])
     def approve(self, request, pk=None):
         application = self.get_object()
 
-        application.status = "approved"
+        application.status = Status.APPROVED
         application.reviewed_by = request.user
         application.save()
 
@@ -27,11 +32,9 @@ class ApplicationViewSet(ModelViewSet):
     def reject(self, request, pk=None):
         application = self.get_object()
 
-        application.status = "rejected"
+        application.status = Status.REJECTED
         application.reviewed_by = request.user
         application.save()
 
         serializer = self.get_serializer(application)
         return Response(serializer.data)
-
-    serializer_class = ApplicationSerializer
