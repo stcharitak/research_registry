@@ -9,20 +9,29 @@ from rest_framework.response import Response
 
 
 class ApplicationViewSet(ModelViewSet):
-    queryset = Application.objects.all()
     permission_classes = [CanAccessApplication]
 
     def get_queryset(self):
         user = self.request.user
 
+        base_queryset = Application.objects.select_related(
+            "study",
+            "participant",
+            "reviewed_by",
+            "study__created_by",
+        ).prefetch_related(
+            "logs",
+            "logs__performed_by",
+        )
+
         if not user.is_authenticated or not user.role:
             return Application.objects.none()
 
         if user.role.name == RoleName.ADMIN:
-            return Application.objects.all()
+            return base_queryset
 
         if user.role.name == RoleName.RESEARCHER:
-            return Application.objects.filter(study__created_by=user)
+            return base_queryset.filter(study__created_by=user)
 
         return Application.objects.none()
 
