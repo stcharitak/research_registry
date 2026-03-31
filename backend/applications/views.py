@@ -7,6 +7,7 @@ from core.permissions import CanAccessApplication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .filters import ApplicationFilter
+from django.db.models import Q
 
 
 class ApplicationViewSet(ModelViewSet):
@@ -48,7 +49,9 @@ class ApplicationViewSet(ModelViewSet):
             return base_queryset
 
         if user.role.name == RoleName.RESEARCHER:
-            return base_queryset.filter(study__created_by=user)
+            return base_queryset.filter(
+                Q(study__created_by=user) | Q(reviewed_by=user)
+            ).distinct()
 
         return Application.objects.none()
 
