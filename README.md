@@ -1,160 +1,225 @@
 # Research Registry API
 
-This project is a Django REST API for managing research studies, participants, and applications.
-It simulates a backend service that could be used in a research environment to register studies,
-collect participant applications, and manage approval workflows.
+A Django REST API for managing research studies, participant records, and application review workflows.
 
-The project is built with Django, Django REST Framework, PostgreSQL, and Docker.
+## What This Project Does
 
----
-
-## Features
-
-* Custom user model with roles (admin / researcher)
-* Study management
-* Participant management
-* Application workflow
-* Approve / reject actions
-* Object-level permissions
-* Filtering, search, ordering, pagination
-* Seed demo data
-* Docker setup with PostgreSQL
-* Ready for Gunicorn + Nginx deployment
-
----
+- Manages studies created by researchers
+- Stores participant profiles
+- Handles study applications and review decisions
+- Uses role-based access control (`admin`, `researcher`)
+- Supports filtering, search, ordering, and pagination
 
 ## Tech Stack
 
-* Python 3
-* Django
-* Django REST Framework
-* PostgreSQL
-* Docker / Docker Compose
-* django-filter
-
----
+- Python 3
+- Django 6
+- Django REST Framework
+- PostgreSQL 17
+- `django-filter`
+- Docker / Docker Compose
 
 ## Project Structure
 
-backend/
-accounts/
-studies/
-participants/
-applications/
-core/
+```text
 research_registry/
+├── backend/
+│   ├── research_registry/   # Django project settings + root URLs
+│   ├── accounts/            # Users, roles, auth endpoints
+│   ├── studies/             # Study resources
+│   ├── participants/        # Participant resources
+│   ├── applications/        # Application resources + review actions
+│   └── core/                # Shared permissions, commands, seeds
+├── docker-compose.yml
+├── start.sh
+└── README.md
+```
 
-docker-compose.yml
-start.sh
-README.md
+## Quick Start (Recommended)
 
----
+1. Clone and enter the project:
 
-## Setup
-
-### 1. Clone repository
-
-git clone <repo>
+```bash
+git clone <your-repo-url>
 cd research_registry
+```
 
-### 2. Create env file
+2. Create environment file:
 
+```bash
 cp .env.example .env
+```
 
-Edit values if needed.
+3. Start everything (build, migrate, init roles, seed data):
 
-### 3. Start with docker
-
+```bash
 ./start.sh
+```
 
-or manually
+API base URL after startup:
 
-docker compose up --build
-
-### 4. Run migrations
-
-docker compose exec web python manage.py migrate
-
-### 5. Initialize roles
-
-docker compose exec web python manage.py init_roles
-
-### 6. Seed demo data
-
-docker compose exec web python manage.py seed_demo_data
-
-### 7. Create superuser
-
-docker compose exec web python manage.py createsuperuser
-
----
-
-## API
-
-Base URL
-
+```text
 http://localhost:8000/api/
+```
 
-Examples
+## Manual Setup Commands
 
-GET /api/studies/
-GET /api/studies/?search=memory
-GET /api/studies/?status=active
-GET /api/studies/?page=2
+```bash
+docker compose up -d --build
+docker compose exec web python manage.py makemigrations
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py init_roles
+docker compose exec web python manage.py seed_demo_data
+```
 
-POST /api/applications/1/approve/
-POST /api/applications/1/reject/
+Create a superuser:
 
-GET /api/me/
+```bash
+docker compose exec web python manage.py createsuperuser
+```
 
-Browsable API
+## Useful Development Commands
 
-http://localhost:8000/api-auth/login/
+Open Django shell:
 
----
-
-## Permissions
-
-Admin:
-
-* full access
-
-Researcher:
-
-* access only own studies and applications
-
-Anonymous:
-
-* read-only
-
----
-
-## Development
-
-Run shell
-
+```bash
 docker compose exec web python manage.py shell
+```
 
-Run tests
+Run tests:
 
+```bash
 docker compose exec web python manage.py test
+```
 
----
+Tail logs:
+
+```bash
+docker compose logs -f web
+```
+
+Stop containers:
+
+```bash
+docker compose down
+```
+
+## Authentication Flow (JWT)
+
+Get access and refresh tokens:
+
+```bash
+curl -X POST http://localhost:8000/api/token/ \
+  -H "Content-Type: application/json" \
+  -d '{"username":"<username>","password":"<password>"}'
+```
+
+Refresh access token:
+
+```bash
+curl -X POST http://localhost:8000/api/token/refresh/ \
+  -H "Content-Type: application/json" \
+  -d '{"refresh":"<refresh_token>"}'
+```
+
+Call authenticated endpoint:
+
+```bash
+curl http://localhost:8000/api/me/ \
+  -H "Authorization: Bearer <access_token>"
+```
+
+## API Endpoints (Current)
+
+All routes below reflect the current URL configuration in this repository.
+
+### Auth and Account
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/token/` | Obtain JWT access/refresh token pair |
+| `POST` | `/api/token/refresh/` | Refresh JWT access token |
+| `GET` | `/api/me/` | Current authenticated user profile |
+
+### Studies
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/studies/` | List studies |
+| `POST` | `/api/studies/` | Create study |
+| `GET` | `/api/studies/{id}/` | Retrieve study |
+| `PUT` | `/api/studies/{id}/` | Replace study |
+| `PATCH` | `/api/studies/{id}/` | Partially update study |
+| `DELETE` | `/api/studies/{id}/` | Delete study |
+
+Query support on list endpoint:
+
+- Filters: `status`, `created_by`
+- Search: `search` (title, description)
+- Ordering: `ordering` (`created_at`, `title`)
+
+### Participants
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/participants/` | List participants |
+| `POST` | `/api/participants/` | Create participant |
+| `GET` | `/api/participants/{id}/` | Retrieve participant |
+| `PUT` | `/api/participants/{id}/` | Replace participant |
+| `PATCH` | `/api/participants/{id}/` | Partially update participant |
+| `DELETE` | `/api/participants/{id}/` | Delete participant |
+
+### Applications
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/applications/` | List applications |
+| `POST` | `/api/applications/` | Create application |
+| `GET` | `/api/applications/{id}/` | Retrieve application |
+| `PUT` | `/api/applications/{id}/` | Replace application |
+| `PATCH` | `/api/applications/{id}/` | Partially update application |
+| `DELETE` | `/api/applications/{id}/` | Delete application |
+| `POST` | `/api/applications/{id}/approve/` | Approve application |
+| `POST` | `/api/applications/{id}/reject/` | Reject application |
+
+Query support on list endpoint:
+
+- Filters: `status`, `study`, `participant`, `reviewed_by`
+- Search: `search` (`status`, `study__id`, `participant__id`, `reviewed_by__username`)
+- Ordering: `ordering` (`id`, `status`, `reviewed_by`)
+
+### Extra Routes
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/admin/` | Django admin |
+| `GET` | `/api-auth/login/` | DRF browsable API login |
+| `GET` | `/api-auth/logout/` | DRF browsable API logout |
+
+## Pagination
+
+Default page size is `5` items per page (`PageNumberPagination`).
+
+Example:
+
+```text
+GET /api/studies/?page=2
+```
+
+## Permissions (High Level)
+
+- `admin`: full access
+- `researcher`: access based on ownership/business rules
+- anonymous users: read-only where allowed
 
 ## Future Improvements
 
-* JWT authentication
-* Export CSV
-* File uploads
-* Study tags
-* Email notifications
-* Logging
-* Audit trail
-* Production deployment with Gunicorn + Nginx
-
----
+- CSV export
+- File uploads
+- Email notifications
+- Expanded audit tooling
+- Production hardening (Gunicorn/Nginx, security settings)
 
 ## License
 
-Example project for learning Python and Django.
-
+Educational/demo project for learning Django + DRF architecture.
