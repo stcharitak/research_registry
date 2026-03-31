@@ -78,6 +78,12 @@ Create a superuser:
 docker compose exec web python manage.py createsuperuser
 ```
 
+Create a researcher user (interactive prompt):
+
+```bash
+docker compose exec web python manage.py create_researcher
+```
+
 ## Useful Development Commands
 
 Open Django shell:
