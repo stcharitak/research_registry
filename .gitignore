@@ -64,3 +64,9 @@ node_modules/
 # -----------------
 *.pid
 *.sock
+
+.codex
+
+htmlcov/
+.coverage
+coverage.xml

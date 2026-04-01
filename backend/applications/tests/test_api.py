@@ -6,7 +6,6 @@ from accounts.models import User, Role, RoleName
 from applications.models import (
     Application,
     ApplicationLog,
-    ApplicationLogAction,
     Status,
 )
 from participants.models import Participant
@@ -89,6 +88,19 @@ class ApplicationAPITests(APITestCase):
 
         self.application.refresh_from_db()
         self.assertEqual(self.application.status, Status.APPROVED)
+        self.assertEqual(self.application.reviewed_by, self.admin)
+        self.assertIsNotNone(self.application.reviewed_by)
+        self.assertEqual(ApplicationLog.objects.count(), 1)
+
+    def test_admin_can_reject_via_api(self):
+        self.authenticate(self.admin)
+
+        response = self.client.post(f"/api/applications/{self.application.id}/reject/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.application.refresh_from_db()
+        self.assertEqual(self.application.status, Status.REJECTED)
         self.assertEqual(self.application.reviewed_by, self.admin)
         self.assertIsNotNone(self.application.reviewed_by)
         self.assertEqual(ApplicationLog.objects.count(), 1)
