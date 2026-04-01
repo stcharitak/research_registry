@@ -10,6 +10,24 @@ A Django REST API for managing research studies, participant records, and applic
 - Uses role-based access control (`admin`, `researcher`)
 - Supports filtering, search, ordering, and pagination
 
+## Architecture Highlights
+
+This project follows a layered architecture to keep business logic clean and testable:
+
+- **Views (API layer)** – handle HTTP requests/responses  
+- **Permissions** – enforce access control at the API level  
+- **Service Layer** – contains core business logic (e.g. approve/reject workflows)  
+- **Models** – database representation  
+
+Key idea:
+
+> Business logic is not implemented in views or serializers, but in dedicated service classes.
+
+This makes the system easier to:
+- test  
+- extend  
+- reuse  
+
 ## Tech Stack
 
 - Python 3
@@ -18,6 +36,8 @@ A Django REST API for managing research studies, participant records, and applic
 - PostgreSQL 17
 - `django-filter`
 - Docker / Docker Compose
+- Ruff (linting & formatting)
+- Coverage.py (test coverage)
 
 ## Project Structure
 
@@ -32,6 +52,7 @@ research_registry/
 │   └── core/                # Shared permissions, commands, seeds
 ├── docker-compose.yml
 ├── start.sh
+├── Makefile
 └── README.md
 ```
 
@@ -53,13 +74,31 @@ cp .env.example .env
 3. Start everything (build, migrate, init roles, seed data):
 
 ```bash
-./start.sh
+make run
 ```
 
 API base URL after startup:
 
 ```text
 http://localhost:8000/api/
+```
+## Useful Development Commands
+
+Using Makefile:
+
+```bash
+make run        # full setup
+make test       # run tests + coverage
+make test-fast  # run tests without coverage
+make lint       # lint code (ruff)
+make format     # format code
+make fix        # auto-fix lint issues
+```
+
+Open Django shell:
+
+```bash
+docker compose exec web python manage.py shell
 ```
 
 ## Manual Setup Commands
@@ -82,32 +121,6 @@ Create a researcher user (interactive prompt):
 
 ```bash
 docker compose exec web python manage.py create_researcher
-```
-
-## Useful Development Commands
-
-Open Django shell:
-
-```bash
-docker compose exec web python manage.py shell
-```
-
-Run tests:
-
-```bash
-docker compose exec web python manage.py test
-```
-
-Tail logs:
-
-```bash
-docker compose logs -f web
-```
-
-Stop containers:
-
-```bash
-docker compose down
 ```
 
 ## Authentication Flow (JWT)
@@ -221,8 +234,6 @@ GET /api/studies/?page=2
 ## Future Improvements
 
 - CSV export
-- File uploads
-- Email notifications
 - Expanded audit tooling
 - Production hardening (Gunicorn/Nginx, security settings)
 
