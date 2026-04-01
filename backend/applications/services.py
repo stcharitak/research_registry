@@ -66,6 +66,10 @@ class ApplicationService:
     @staticmethod
     @transaction.atomic
     def approve(application, reviewer):
+        role_name = getattr(getattr(reviewer, "role", None), "name", None)
+        if role_name != RoleName.ADMIN:
+            raise PermissionDenied("Only admins can approve applications.")
+
         application.status = Status.APPROVED
 
         application.reviewed_by = reviewer
@@ -84,6 +88,10 @@ class ApplicationService:
     @staticmethod
     @transaction.atomic
     def reject(application, reviewer):
+        role_name = getattr(getattr(reviewer, "role", None), "name", None)
+        if role_name != RoleName.ADMIN:
+            raise PermissionDenied("Only admins can reject applications.")
+
         application.status = Status.REJECTED
 
         application.reviewed_by = reviewer
