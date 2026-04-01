@@ -2,12 +2,45 @@ from django.db import models
 from django.conf import settings
 from participants.models import Participant
 from studies.models import Study
+from accounts.models import RoleName
+from django.db.models import Q
 
 
 class Status(models.TextChoices):
     PENDING = "pending", "Pending"
     APPROVED = "approved", "Approved"
     REJECTED = "rejected", "Rejected"
+
+
+class ApplicationQuerySet(models.QuerySet):
+    def for_user(self, user):
+        if not user or not user.is_authenticated:
+            return self.none()
+
+        role_name = getattr(getattr(user, "role", None), "name", None)
+
+        if role_name == RoleName.ADMIN:
+            return self
+
+        if role_name == RoleName.RESEARCHER:
+            return self.filter(
+                Q(study__created_by=user) | Q(reviewed_by=user)
+            ).distinct()
+
+        return self.none()
+
+    def pending(self):
+        return self.filter(status=Status.PENDING)
+
+    def approved(self):
+        return self.filter(status=Status.APPROVED)
+
+    def rejected(self):
+        return self.filter(status=Status.REJECTED)
+
+
+class ApplicationManager(models.Manager.from_queryset(ApplicationQuerySet)):
+    pass
 
 
 class Application(models.Model):
@@ -57,8 +90,10 @@ class Application(models.Model):
             )
         ]
 
+    objects = ApplicationManager()
+
     def __str__(self) -> str:
-        return f"{self.participant.code} -> {self.study.title} ({self.status})"
+        return f"Application #{self.pk}"
 
 
 class ApplicationLogAction(models.TextChoices):

@@ -23,16 +23,30 @@ class IsAuthenticatedOrReadOnly(BasePermission):
 
 
 class CanAccessApplication(IsAdminOrResearcher):
+    admin_only_actions = {"approve", "reject", "destroy"}
+    allowed_actions = {
+        "list",
+        "retrieve",
+        "create",
+        "update",
+        "partial_update",
+        "approve",
+        "reject",
+        "destroy",
+    }
+
     def has_permission(self, request, view):
         user = request.user
 
         if not super().has_permission(request, view):
             return False
 
-        if view.action in ["approve", "reject", "destroy"]:
+        action = getattr(view, "action", None)
+
+        if action in self.admin_only_actions:
             return user.role.name == RoleName.ADMIN
 
-        if view.action in ["list", "retrieve", "create", "update", "partial_update"]:
+        if action in self.allowed_actions:
             return user.role.name in [RoleName.ADMIN, RoleName.RESEARCHER]
 
         return False
@@ -47,6 +61,6 @@ class CanAccessApplication(IsAdminOrResearcher):
             return True
 
         if user.role.name == RoleName.RESEARCHER:
-            return obj.study.created_by == user
+            return obj.study.created_by == user or obj.reviewed_by == user
 
         return False

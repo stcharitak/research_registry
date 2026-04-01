@@ -1,13 +1,13 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Application, Status, ApplicationLog, ApplicationLogAction
-from accounts.models import RoleName
+from applications.services import ApplicationService
+
 from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
 from core.permissions import CanAccessApplication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .filters import ApplicationFilter
-from django.db.models import Q
+from rest_framework import status
 
 
 class ApplicationViewSet(ModelViewSet):
@@ -30,30 +30,7 @@ class ApplicationViewSet(ModelViewSet):
     ordering = ["-id"]
 
     def get_queryset(self):
-        user = self.request.user
-
-        base_queryset = Application.objects.select_related(
-            "study",
-            "participant",
-            "reviewed_by",
-            "study__created_by",
-        ).prefetch_related(
-            "logs",
-            "logs__performed_by",
-        )
-
-        if not user.is_authenticated or not user.role:
-            return Application.objects.none()
-
-        if user.role.name == RoleName.ADMIN:
-            return base_queryset
-
-        if user.role.name == RoleName.RESEARCHER:
-            return base_queryset.filter(
-                Q(study__created_by=user) | Q(reviewed_by=user)
-            ).distinct()
-
-        return Application.objects.none()
+        return ApplicationService.get_visible_applications(self.request.user)
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -61,38 +38,32 @@ class ApplicationViewSet(ModelViewSet):
 
         return ApplicationWriteSerializer
 
+    def perform_create(self, serializer):
+        serializer.instance = ApplicationService.create_application(
+            user=self.request.user,
+            validated_data=serializer.validated_data,
+        )
+
+    def perform_update(self, serializer):
+        serializer.instance = ApplicationService.update_application(
+            application=self.get_object(),
+            user=self.request.user,
+            validated_data=serializer.validated_data,
+        )
+
     @action(detail=True, methods=["post"])
     def approve(self, request, pk=None):
         application = self.get_object()
 
-        application.status = Status.APPROVED
-        application.reviewed_by = request.user
-        application.save()
-
-        ApplicationLog.objects.create(
-            application=application,
-            action=ApplicationLogAction.APPROVED,
-            performed_by=request.user,
-        )
-
+        application = ApplicationService.approve(application, request.user)
         serializer = self.get_serializer(application)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["post"])
     def reject(self, request, pk=None):
         application = self.get_object()
 
-        application.status = Status.REJECTED
-        application.reviewed_by = request.user
-        application.save()
-
-        ApplicationLog.objects.create(
-            application=application,
-            action=ApplicationLogAction.REJECTED,
-            performed_by=request.user,
-        )
-
+        application = ApplicationService.reject(application, request.user)
         serializer = self.get_serializer(application)
-
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)

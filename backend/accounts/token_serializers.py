@@ -8,5 +8,4 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         token["username"] = user.username
         token["role"] = user.role.name if user.role else None
-
         return token
