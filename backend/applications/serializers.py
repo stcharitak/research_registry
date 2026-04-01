@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from studies.serializers import StudyListSerializer
 from accounts.models import User
 from studies.models import Study
 from participants.models import Participant
-from .models import Application, ApplicationLog, ApplicationLogAction
+from .models import Application, ApplicationLog
 
 
 class SimpleUserSerializer(serializers.ModelSerializer):

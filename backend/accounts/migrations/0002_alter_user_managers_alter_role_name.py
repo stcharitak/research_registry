@@ -5,21 +5,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('accounts', '0001_initial'),
+        ("accounts", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='user',
+            name="user",
             managers=[
-                ('objects', accounts.models.UserManager()),
+                ("objects", accounts.models.UserManager()),
             ],
         ),
         migrations.AlterField(
-            model_name='role',
-            name='name',
-            field=models.CharField(choices=[('admin', 'Admin'), ('researcher', 'Researcher')], max_length=50, unique=True),
+            model_name="role",
+            name="name",
+            field=models.CharField(
+                choices=[("admin", "Admin"), ("researcher", "Researcher")],
+                max_length=50,
+                unique=True,
+            ),
         ),
     ]
