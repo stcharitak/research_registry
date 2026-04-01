@@ -17,6 +17,9 @@ test:
 
 lint:
 	$(DC) ruff check .
+	
+lint-deep:
+	$(DC) pylint applications accounts core studies participants
 
 format:
 	$(DC) ruff format .
