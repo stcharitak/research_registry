@@ -98,6 +98,7 @@ cd research_registry
 ```bash
 cp .env.example .env
 ```
+Then configure the .env file with your environment-specific values (e.g. database credentials, passwords, and secret keys).
 
 3. Start everything (build, migrate, init roles, seed data):
 
