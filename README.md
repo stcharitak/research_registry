@@ -9,6 +9,7 @@ A Django REST API for managing research studies, participant records, and applic
 - Handles study applications and review decisions
 - Uses role-based access control (`admin`, `researcher`)
 - Supports filtering, search, ordering, and pagination
+- Provides asynchronous data export functionality (CSV)
 
 ## Architecture Highlights
 
@@ -34,10 +35,12 @@ This makes the system easier to:
 - Django 6
 - Django REST Framework
 - PostgreSQL 17
-- `django-filter`
+- Celery (background workers)
+- RabbitMQ (message broker)
 - Docker / Docker Compose
 - Ruff (linting & formatting)
 - Coverage.py (test coverage)
+- `django-filter`
 
 ## Project Structure
 
@@ -45,16 +48,41 @@ This makes the system easier to:
 research_registry/
 ├── backend/
 │   ├── research_registry/   # Django project settings + root URLs
-│   ├── accounts/            # Users, roles, auth endpoints
+│   ├── accounts/            # Users, roles, auth
 │   ├── studies/             # Study resources
 │   ├── participants/        # Participant resources
-│   ├── applications/        # Application resources + review actions
-│   └── core/                # Shared permissions, commands, seeds
-├── docker-compose.yml
-├── start.sh
-├── Makefile
-└── README.md
+│   ├── applications/        # Application resources + review logic
+│   │   └── services/
+│   │       └── application_export_service.py
+│   ├── exports/             # Export system (jobs, tasks, API)
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── serializers.py
+│   │   ├── tasks.py
+│   │   └── constants.py
+│   ├── Dockerfile
+│   └── requirements.txt
 ```
+
+## Export System (Async CSV Export)
+
+This project includes a production-style export system using background workers.
+
+### Key Features
+Export large datasets as CSV
+Runs asynchronously via Celery workers
+Uses RabbitMQ as message broker
+Tracks export status (pending, processing, completed, failed)
+Stores generated files using Django FileField
+Enforces user-level permissions on exported data
+
+### How It Works
+1. User requests an export via API
+2. An ExportJob is created in the database
+3. A Celery worker processes the job asynchronously
+4. Data is written to a CSV file
+5. File is stored under /media/exports/
+6. User can check status and download when ready
 
 ## Quick Start (Recommended)
 
@@ -200,6 +228,15 @@ Query support on list endpoint:
 | `DELETE` | `/api/applications/{id}/` | Delete application |
 | `POST` | `/api/applications/{id}/approve/` | Approve application |
 | `POST` | `/api/applications/{id}/reject/` | Reject application |
+
+
+### Exports
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/exports/` | Create an asynchronous export job for a specific resource type (e.g. applications) with optional filtering. |
+| `GET` | `/api/exports/` | List all export jobs created by the authenticated user, ordered by most recent. |
+| `GET` | `/api/exports/{id}/` | Retrieve the status and details of a specific export job, including the download URL when available. |
 
 Query support on list endpoint:
 
