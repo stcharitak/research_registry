@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,18 +14,56 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='ExportJob',
+            name="ExportJob",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('export_type', models.CharField(choices=[('applications', 'Applications'), ('studies', 'Studies'), ('participants', 'Participants')], default='applications', max_length=50)),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('processing', 'Processing'), ('completed', 'Completed'), ('failed', 'Failed')], default='pending', max_length=20)),
-                ('filters', models.JSONField(blank=True, default=dict)),
-                ('file', models.FileField(blank=True, null=True, upload_to='exports/')),
-                ('error_message', models.TextField(blank=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('started_at', models.DateTimeField(blank=True, null=True)),
-                ('finished_at', models.DateTimeField(blank=True, null=True)),
-                ('requested_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='export_jobs', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "export_type",
+                    models.CharField(
+                        choices=[
+                            ("applications", "Applications"),
+                            ("studies", "Studies"),
+                            ("participants", "Participants"),
+                        ],
+                        default="applications",
+                        max_length=50,
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("pending", "Pending"),
+                            ("processing", "Processing"),
+                            ("completed", "Completed"),
+                            ("failed", "Failed"),
+                        ],
+                        default="pending",
+                        max_length=20,
+                    ),
+                ),
+                ("filters", models.JSONField(blank=True, default=dict)),
+                ("file", models.FileField(blank=True, null=True, upload_to="exports/")),
+                ("error_message", models.TextField(blank=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("started_at", models.DateTimeField(blank=True, null=True)),
+                ("finished_at", models.DateTimeField(blank=True, null=True)),
+                (
+                    "requested_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="export_jobs",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
