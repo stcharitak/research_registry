@@ -10,6 +10,14 @@ services:
     ports:
       - "5432:5432"
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: research_registry_rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   web:
     build:
       context: ./backend
@@ -19,10 +27,27 @@ services:
       - .env
     volumes:
       - ./backend:/app
+      - ./backend/media:/app/media
     ports:
       - "8000:8000"
     depends_on:
       - db
+      - rabbitmq
+
+  worker:
+    build: ./backend
+    container_name: research_registry_worker
+    command: celery -A research_registry worker -l info
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - ./backend/media:/app/media
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - rabbitmq
 
 volumes:
   postgres_data:
+  media:

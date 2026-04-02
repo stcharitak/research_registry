@@ -14,5 +14,21 @@
     "role": "researcher",
     "is_staff": true,
     "is_superuser": false
+  },
+  {
+    "username": "researcher2",
+    "email": "researcher2@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher3",
+    "email": "researcher3@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
   }
 ]

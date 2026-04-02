@@ -1,9 +1,9 @@
-from django.db import models
+from accounts.models import RoleName
 from django.conf import settings
+from django.db import models
+from django.db.models import Q
 from participants.models import Participant
 from studies.models import Study
-from accounts.models import RoleName
-from django.db.models import Q
 
 
 class Status(models.TextChoices):

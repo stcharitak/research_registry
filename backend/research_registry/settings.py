@@ -11,9 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
-
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     "studies",
     "participants",
     "applications",
+    "exports",
 ]
 
 MIDDLEWARE = [
@@ -160,3 +160,15 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "TOKEN_OBTAIN_SERIALIZER": "accounts.token_serializers.CustomTokenObtainPairSerializer",
 }
+
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "amqp://guest:guest@rabbitmq:5672//")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "Europe/Berlin"
+CELERY_TASK_TIME_LIMIT = 60 * 10
+CELERY_TASK_SOFT_TIME_LIMIT = 60 * 8
