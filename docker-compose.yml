@@ -34,10 +34,24 @@ services:
       - db
       - rabbitmq
 
-  worker:
+  worker_default:
     build: ./backend
-    container_name: research_registry_worker
-    command: celery -A research_registry worker -l info
+    container_name: research_registry_worker_default
+    command: celery -A research_registry worker -l info -Q default
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - ./backend/media:/app/media
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - rabbitmq
+
+  worker_exports:
+    build: ./backend
+    container_name: research_registry_worker_exports
+    command: celery -A research_registry worker -l info -Q exports
     restart: unless-stopped
     volumes:
       - ./backend:/app
