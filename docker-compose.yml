@@ -9,6 +9,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - research_registry_net
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -17,6 +19,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - research_registry_net
 
   web:
     build:
@@ -30,6 +34,8 @@ services:
       - ./backend/media:/app/media
     ports:
       - "8000:8000"
+    networks:
+      - research_registry_net
     depends_on:
       - db
       - rabbitmq
@@ -39,6 +45,8 @@ services:
     container_name: research_registry_worker_default
     command: celery -A research_registry worker -l info -Q default
     restart: unless-stopped
+    networks:
+      - research_registry_net
     volumes:
       - ./backend:/app
       - ./backend/media:/app/media
@@ -53,6 +61,8 @@ services:
     container_name: research_registry_worker_exports
     command: celery -A research_registry worker -l info -Q exports
     restart: unless-stopped
+    networks:
+      - research_registry_net
     volumes:
       - ./backend:/app
       - ./backend/media:/app/media
@@ -65,3 +75,8 @@ services:
 volumes:
   postgres_data:
   media:
+
+
+networks:
+  research_registry_net:
+    external: true

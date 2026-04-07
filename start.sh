@@ -4,7 +4,7 @@ set -e
 
 echo "=== Starting project ==="
 
-docker compose up -d --build
+docker compose up -d --build --force-recreate
 
 echo "Waiting for Django..."
 
