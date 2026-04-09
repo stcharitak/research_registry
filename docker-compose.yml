@@ -35,7 +35,9 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - research_registry_net
+      research_registry_net:
+        aliases:
+          - web
     depends_on:
       - db
       - rabbitmq
