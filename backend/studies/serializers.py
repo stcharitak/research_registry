@@ -18,6 +18,7 @@ class StudyListSerializer(serializers.ModelSerializer):
             "status",
             "created_by",
             "created_by_username",
+            "created_at",
         ]
 
 
