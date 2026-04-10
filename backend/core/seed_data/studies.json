@@ -1,14 +1,110 @@
 [
   {
-    "title": "Memory Study 2026",
-    "description": "Study about memory performance",
-    "status": "active",
+    "title": "Sleep and Memory Study",
+    "description": "Investigating how sleep quality affects memory retention.",
+    "status": "open",
     "created_by": "researcher1"
   },
   {
-    "title": "Sleep Study",
-    "description": "Study about sleep quality",
+    "title": "Attention Under Stress",
+    "description": "Measuring attention span under stressful conditions.",
     "status": "draft",
     "created_by": "researcher1"
+  },
+  {
+    "title": "Cognitive Flexibility Research",
+    "description": "Exploring how quickly individuals adapt to new rules.",
+    "status": "open",
+    "created_by": "researcher2"
+  },
+  {
+    "title": "Decision Making Patterns",
+    "description": "Studying how people make decisions under uncertainty.",
+    "status": "closed",
+    "created_by": "researcher2"
+  },
+  {
+    "title": "Emotional Regulation Study",
+    "description": "Analyzing emotional responses in challenging environments.",
+    "status": "open",
+    "created_by": "researcher3"
+  },
+  {
+    "title": "Learning Speed Analysis",
+    "description": "Tracking how quickly participants learn new tasks.",
+    "status": "open",
+    "created_by": "researcher4"
+  },
+  {
+    "title": "Visual Perception Study",
+    "description": "Understanding how visual stimuli are processed.",
+    "status": "draft",
+    "created_by": "researcher4"
+  },
+  {
+    "title": "Memory Recall Experiment",
+    "description": "Testing short-term and long-term memory recall.",
+    "status": "closed",
+    "created_by": "researcher4"
+  },
+  {
+    "title": "Behavioral Patterns in Groups",
+    "description": "Observing behavior in group dynamics.",
+    "status": "open",
+    "created_by": "researcher5"
+  },
+  {
+    "title": "Reaction Time Measurement",
+    "description": "Measuring response time to various stimuli.",
+    "status": "open",
+    "created_by": "researcher6"
+  },
+  {
+    "title": "Multitasking Efficiency Study",
+    "description": "Evaluating performance while multitasking.",
+    "status": "draft",
+    "created_by": "researcher6"
+  },
+  {
+    "title": "Cognitive Load Impact Study",
+    "description": "Studying how cognitive load affects task performance.",
+    "status": "open",
+    "created_by": "researcher7"
+  },
+  {
+    "title": "Social Interaction Analysis",
+    "description": "Analyzing communication patterns in social settings.",
+    "status": "closed",
+    "created_by": "researcher8"
+  },
+  {
+    "title": "Language Processing Study",
+    "description": "Understanding how language is processed in the brain.",
+    "status": "open",
+    "created_by": "researcher9"
+  },
+  {
+    "title": "Problem Solving Strategies",
+    "description": "Exploring different approaches to solving problems.",
+    "status": "draft",
+    "created_by": "researcher10"
+  },
+  {
+    "title": "Motivation and Performance Study",
+    "description": "Linking motivation levels to task performance.",
+    "status": "open",
+    "created_by": "researcher11"
+  },
+  {
+    "title": "Risk Taking Behavior Study",
+    "description": "Analyzing how individuals take risks.",
+    "status": "closed",
+    "created_by": "researcher12"
+  },
+  {
+    "title": "Neuroplasticity Experiment",
+    "description": "Studying how the brain adapts over time.",
+    "status": "open",
+    "created_by": "researcher13"
   }
 ]

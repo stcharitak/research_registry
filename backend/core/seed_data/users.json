@@ -30,5 +30,165 @@
     "role": "researcher",
     "is_staff": true,
     "is_superuser": false
+  },
+  {
+    "username": "admin1",
+    "email": "admin1@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin2",
+    "email": "admin2@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin3",
+    "email": "admin3@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin4",
+    "email": "admin4@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin5",
+    "email": "admin5@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin6",
+    "email": "admin6@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin7",
+    "email": "admin7@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin8",
+    "email": "admin8@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin9",
+    "email": "admin9@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "admin10",
+    "email": "admin10@example.com",
+    "password": "admin1234",
+    "role": "admin",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "username": "researcher4",
+    "email": "researcher4@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher5",
+    "email": "researcher5@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher6",
+    "email": "researcher6@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher7",
+    "email": "researcher7@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher8",
+    "email": "researcher8@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher9",
+    "email": "researcher9@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher10",
+    "email": "researcher10@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher11",
+    "email": "researcher11@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher12",
+    "email": "researcher12@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
+  },
+  {
+    "username": "researcher13",
+    "email": "researcher13@example.com",
+    "password": "research1234",
+    "role": "researcher",
+    "is_staff": true,
+    "is_superuser": false
   }
 ]

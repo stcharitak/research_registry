@@ -1,16 +1,436 @@
 [
   {
     "participant": "P001",
-    "study": "Memory Study 2026",
+    "study": "Sleep and Memory Study",
     "status": "approved",
-    "reviewed_by": "researcher1",
-    "notes": "OK"
+    "reviewed_by": "admin1",
+    "notes": "Eligible and approved."
   },
   {
     "participant": "P002",
-    "study": "Memory Study 2026",
+    "study": "Sleep and Memory Study",
     "status": "pending",
     "reviewed_by": null,
     "notes": ""
+  },
+  {
+    "participant": "P003",
+    "study": "Sleep and Memory Study",
+    "status": "rejected",
+    "reviewed_by": "admin2",
+    "notes": "Did not meet inclusion criteria."
+  },
+  {
+    "participant": "P004",
+    "study": "Sleep and Memory Study",
+    "status": "approved",
+    "reviewed_by": "researcher1",
+    "notes": "Good fit for the study."
+  },
+  {
+    "participant": "P005",
+    "study": "Attention Under Stress",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P006",
+    "study": "Attention Under Stress",
+    "status": "approved",
+    "reviewed_by": "admin3",
+    "notes": "Application complete."
+  },
+  {
+    "participant": "P007",
+    "study": "Attention Under Stress",
+    "status": "rejected",
+    "reviewed_by": "researcher1",
+    "notes": "Incomplete background questionnaire."
+  },
+  {
+    "participant": "P008",
+    "study": "Cognitive Flexibility Research",
+    "status": "approved",
+    "reviewed_by": "researcher2",
+    "notes": "Meets all requirements."
+  },
+  {
+    "participant": "P009",
+    "study": "Cognitive Flexibility Research",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P010",
+    "study": "Cognitive Flexibility Research",
+    "status": "approved",
+    "reviewed_by": "admin4",
+    "notes": "Accepted after screening."
+  },
+  {
+    "participant": "P011",
+    "study": "Cognitive Flexibility Research",
+    "status": "rejected",
+    "reviewed_by": "admin1",
+    "notes": "Scheduling conflict."
+  },
+  {
+    "participant": "P012",
+    "study": "Decision Making Patterns",
+    "status": "approved",
+    "reviewed_by": "researcher2",
+    "notes": "Approved for participation."
+  },
+  {
+    "participant": "P013",
+    "study": "Decision Making Patterns",
+    "status": "rejected",
+    "reviewed_by": "admin5",
+    "notes": "Participant withdrew interest."
+  },
+  {
+    "participant": "P014",
+    "study": "Decision Making Patterns",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P015",
+    "study": "Emotional Regulation Study",
+    "status": "approved",
+    "reviewed_by": "researcher3",
+    "notes": "Strong candidate."
+  },
+  {
+    "participant": "P016",
+    "study": "Emotional Regulation Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P017",
+    "study": "Emotional Regulation Study",
+    "status": "rejected",
+    "reviewed_by": "admin2",
+    "notes": "Consent form issue."
+  },
+  {
+    "participant": "P018",
+    "study": "Emotional Regulation Study",
+    "status": "approved",
+    "reviewed_by": "admin6",
+    "notes": "Approved after review."
+  },
+  {
+    "participant": "P019",
+    "study": "Learning Speed Analysis",
+    "status": "approved",
+    "reviewed_by": "researcher4",
+    "notes": "Suitable profile."
+  },
+  {
+    "participant": "P020",
+    "study": "Learning Speed Analysis",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P021",
+    "study": "Learning Speed Analysis",
+    "status": "approved",
+    "reviewed_by": "admin7",
+    "notes": "Accepted."
+  },
+  {
+    "participant": "P022",
+    "study": "Learning Speed Analysis",
+    "status": "rejected",
+    "reviewed_by": "researcher4",
+    "notes": "Age group already full."
+  },
+  {
+    "participant": "P023",
+    "study": "Visual Perception Study",
+    "status": "approved",
+    "reviewed_by": "admin3",
+    "notes": "Vision screening passed."
+  },
+  {
+    "participant": "P024",
+    "study": "Visual Perception Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P025",
+    "study": "Visual Perception Study",
+    "status": "rejected",
+    "reviewed_by": "researcher4",
+    "notes": "Did not match study profile."
+  },
+  {
+    "participant": "P026",
+    "study": "Memory Recall Experiment",
+    "status": "approved",
+    "reviewed_by": "admin8",
+    "notes": "Approved after memory pretest."
+  },
+  {
+    "participant": "P027",
+    "study": "Memory Recall Experiment",
+    "status": "approved",
+    "reviewed_by": "researcher4",
+    "notes": "All data complete."
+  },
+  {
+    "participant": "P028",
+    "study": "Memory Recall Experiment",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P029",
+    "study": "Behavioral Patterns in Groups",
+    "status": "approved",
+    "reviewed_by": "researcher5",
+    "notes": "Group assignment available."
+  },
+  {
+    "participant": "P030",
+    "study": "Behavioral Patterns in Groups",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P001",
+    "study": "Behavioral Patterns in Groups",
+    "status": "approved",
+    "reviewed_by": "admin4",
+    "notes": "Previous participation reviewed."
+  },
+  {
+    "participant": "P002",
+    "study": "Reaction Time Measurement",
+    "status": "approved",
+    "reviewed_by": "researcher6",
+    "notes": "Reaction baseline suitable."
+  },
+  {
+    "participant": "P003",
+    "study": "Reaction Time Measurement",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P004",
+    "study": "Reaction Time Measurement",
+    "status": "rejected",
+    "reviewed_by": "admin9",
+    "notes": "Missed screening appointment."
+  },
+  {
+    "participant": "P005",
+    "study": "Reaction Time Measurement",
+    "status": "approved",
+    "reviewed_by": "researcher6",
+    "notes": "Accepted for phase one."
+  },
+  {
+    "participant": "P006",
+    "study": "Multitasking Efficiency Study",
+    "status": "approved",
+    "reviewed_by": "admin10",
+    "notes": "Good match for the protocol."
+  },
+  {
+    "participant": "P007",
+    "study": "Multitasking Efficiency Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P008",
+    "study": "Multitasking Efficiency Study",
+    "status": "rejected",
+    "reviewed_by": "researcher6",
+    "notes": "Technical requirements not met."
+  },
+  {
+    "participant": "P009",
+    "study": "Cognitive Load Impact Study",
+    "status": "approved",
+    "reviewed_by": "researcher7",
+    "notes": "Approved."
+  },
+  {
+    "participant": "P010",
+    "study": "Cognitive Load Impact Study",
+    "status": "approved",
+    "reviewed_by": "admin1",
+    "notes": "Screening successful."
+  },
+  {
+    "participant": "P011",
+    "study": "Cognitive Load Impact Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P012",
+    "study": "Cognitive Load Impact Study",
+    "status": "rejected",
+    "reviewed_by": "admin6",
+    "notes": "Participant unavailable."
+  },
+  {
+    "participant": "P013",
+    "study": "Social Interaction Analysis",
+    "status": "approved",
+    "reviewed_by": "researcher8",
+    "notes": "Accepted."
+  },
+  {
+    "participant": "P014",
+    "study": "Social Interaction Analysis",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P015",
+    "study": "Social Interaction Analysis",
+    "status": "rejected",
+    "reviewed_by": "admin7",
+    "notes": "No available session."
+  },
+  {
+    "participant": "P016",
+    "study": "Language Processing Study",
+    "status": "approved",
+    "reviewed_by": "researcher9",
+    "notes": "Language profile suitable."
+  },
+  {
+    "participant": "P017",
+    "study": "Language Processing Study",
+    "status": "approved",
+    "reviewed_by": "admin2",
+    "notes": "Approved after review."
+  },
+  {
+    "participant": "P018",
+    "study": "Language Processing Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P019",
+    "study": "Language Processing Study",
+    "status": "rejected",
+    "reviewed_by": "researcher9",
+    "notes": "Insufficient questionnaire data."
+  },
+  {
+    "participant": "P020",
+    "study": "Problem Solving Strategies",
+    "status": "approved",
+    "reviewed_by": "researcher10",
+    "notes": "Good candidate."
+  },
+  {
+    "participant": "P021",
+    "study": "Problem Solving Strategies",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P022",
+    "study": "Problem Solving Strategies",
+    "status": "rejected",
+    "reviewed_by": "admin8",
+    "notes": "Outside target group."
+  },
+  {
+    "participant": "P023",
+    "study": "Motivation and Performance Study",
+    "status": "approved",
+    "reviewed_by": "researcher11",
+    "notes": "Accepted."
+  },
+  {
+    "participant": "P024",
+    "study": "Motivation and Performance Study",
+    "status": "approved",
+    "reviewed_by": "admin5",
+    "notes": "Application approved."
+  },
+  {
+    "participant": "P025",
+    "study": "Motivation and Performance Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P026",
+    "study": "Risk Taking Behavior Study",
+    "status": "approved",
+    "reviewed_by": "researcher12",
+    "notes": "Accepted after screening."
+  },
+  {
+    "participant": "P027",
+    "study": "Risk Taking Behavior Study",
+    "status": "rejected",
+    "reviewed_by": "admin9",
+    "notes": "Incomplete consent confirmation."
+  },
+  {
+    "participant": "P028",
+    "study": "Risk Taking Behavior Study",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P029",
+    "study": "Neuroplasticity Experiment",
+    "status": "approved",
+    "reviewed_by": "researcher13",
+    "notes": "Approved."
+  },
+  {
+    "participant": "P030",
+    "study": "Neuroplasticity Experiment",
+    "status": "approved",
+    "reviewed_by": "admin10",
+    "notes": "Application complete and accepted."
+  },
+  {
+    "participant": "P001",
+    "study": "Neuroplasticity Experiment",
+    "status": "pending",
+    "reviewed_by": null,
+    "notes": ""
+  },
+  {
+    "participant": "P002",
+    "study": "Neuroplasticity Experiment",
+    "status": "rejected",
+    "reviewed_by": "researcher13",
+    "notes": "Duplicate schedule conflict."
   }
 ]
