@@ -9,6 +9,8 @@ from applications.models import (
     Status,
 )
 from applications.services import ApplicationService
+from applications.services import ApplicationExportService
+from exports.models import ExportJob, ExportType
 from participants.models import Participant
 from studies.models import Study
 
@@ -158,3 +160,63 @@ class ApplicationServiceTests(TestCase):
         self.assertEqual(application.status, Status.PENDING)
         self.assertIsNone(application.reviewed_by)
         self.assertEqual(ApplicationLog.objects.count(), 0)
+
+
+class ApplicationExportServiceTests(TestCase):
+    def setUp(self):
+        self.admin_role = Role.objects.create(name=RoleName.ADMIN)
+        self.researcher_role = Role.objects.create(name=RoleName.RESEARCHER)
+
+        self.admin = User.objects.create_user(
+            username="admin",
+            email="admin@example.com",
+            password="testpass123",
+            role=self.admin_role,
+        )
+        self.researcher = User.objects.create_user(
+            username="researcher",
+            email="researcher@example.com",
+            password="testpass123",
+            role=self.researcher_role,
+        )
+
+        self.study = Study.objects.create(
+            title="Study A",
+            created_by=self.researcher,
+        )
+        self.participant_1 = Participant.objects.create(first_name="John", last_name="A")
+        self.participant_2 = Participant.objects.create(first_name="Jane", last_name="B")
+
+        self.reviewed_app = Application.objects.create(
+            study=self.study,
+            participant=self.participant_1,
+            status=Status.APPROVED,
+            reviewed_by=self.admin,
+        )
+        self.unreviewed_app = Application.objects.create(
+            study=self.study,
+            participant=self.participant_2,
+            status=Status.PENDING,
+        )
+
+    def test_build_queryset_filters_by_reviewed_by_alias(self):
+        job = ExportJob.objects.create(
+            requested_by=self.admin,
+            export_type=ExportType.APPLICATIONS,
+            filters={"reviewed_by": self.admin.id},
+        )
+
+        queryset = ApplicationExportService.build_queryset(job)
+
+        self.assertEqual(list(queryset), [self.reviewed_app])
+
+    def test_build_queryset_filters_by_reviewed_by_id(self):
+        job = ExportJob.objects.create(
+            requested_by=self.admin,
+            export_type=ExportType.APPLICATIONS,
+            filters={"reviewed_by_id": self.admin.id},
+        )
+
+        queryset = ApplicationExportService.build_queryset(job)
+
+        self.assertEqual(list(queryset), [self.reviewed_app])

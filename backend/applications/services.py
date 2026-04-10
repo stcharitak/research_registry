@@ -148,7 +148,6 @@ class ApplicationExportService:
     @classmethod
     def build_queryset(cls, job: ExportJob):
         queryset = cls._base_queryset_for_user(job.requested_by)
-
         status_value = job.filters.get("status")
         if status_value:
             queryset = queryset.filter(status=status_value)
@@ -160,6 +159,13 @@ class ApplicationExportService:
         participant_id = job.filters.get("participant_id")
         if participant_id:
             queryset = queryset.filter(participant_id=participant_id)
+
+        reviewed_by_id = job.filters.get("reviewed_by_id")
+        if reviewed_by_id is None:
+            # Backward-compatible alias: accept reviewed_by as reviewer user id.
+            reviewed_by_id = job.filters.get("reviewed_by")
+        if reviewed_by_id:
+            queryset = queryset.filter(reviewed_by_id=reviewed_by_id)
 
         return queryset
 
