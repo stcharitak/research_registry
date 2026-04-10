@@ -1,9 +1,9 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
 from accounts.models import RoleName
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class IsAdminOrResearcher(BasePermission):
-    def has_permission(self, request, view):
+    def has_permission(self, request, _view):
         user = request.user
         if not user or not user.is_authenticated:
             return False
@@ -15,7 +15,7 @@ class IsAdminOrResearcher(BasePermission):
 
 
 class IsAuthenticatedOrReadOnly(BasePermission):
-    def has_permission(self, request, view):
+    def has_permission(self, request, _view):
         if request.method in SAFE_METHODS:
             return True
 
@@ -51,7 +51,7 @@ class CanAccessApplication(IsAdminOrResearcher):
 
         return False
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, _view, obj):
         user = request.user
 
         if not user.role:

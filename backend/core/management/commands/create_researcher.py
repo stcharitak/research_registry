@@ -1,15 +1,14 @@
 from getpass import getpass
 
+from accounts.models import Role, RoleName
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
-
-from accounts.models import Role, RoleName
 
 
 class Command(BaseCommand):
     help = "Interactively create a researcher user"
 
-    def handle(self, *args, **options):
+    def handle(self, *_args, **_options):
         User = get_user_model()
 
         username = input("Username: ").strip()

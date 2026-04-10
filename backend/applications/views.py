@@ -53,6 +53,7 @@ class ApplicationViewSet(ModelViewSet):
 
     @action(detail=True, methods=["post"])
     def approve(self, request, pk=None):
+        _ = pk
         application = self.get_object()
 
         application = ApplicationService.approve(application, request.user)
@@ -62,6 +63,7 @@ class ApplicationViewSet(ModelViewSet):
 
     @action(detail=True, methods=["post"])
     def reject(self, request, pk=None):
+        _ = pk
         application = self.get_object()
 
         application = ApplicationService.reject(application, request.user)

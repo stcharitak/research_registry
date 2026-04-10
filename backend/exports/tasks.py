@@ -11,7 +11,7 @@ from .models import ExportJob, ExportJobStatus, ExportType
     retry_backoff=True,
     retry_kwargs={"max_retries": 3},
 )
-def run_export_job(self, export_job_id: int):
+def run_export_job(_task, export_job_id: int):
     job = ExportJob.objects.get(id=export_job_id)
 
     job.status = ExportJobStatus.PROCESSING
