@@ -29,20 +29,6 @@ class ApplicationQuerySet(models.QuerySet):
 
         return self.none()
 
-    def pending(self):
-        return self.filter(status=Status.PENDING)
-
-    def approved(self):
-        return self.filter(status=Status.APPROVED)
-
-    def rejected(self):
-        return self.filter(status=Status.REJECTED)
-
-
-class ApplicationManager(models.Manager.from_queryset(ApplicationQuerySet)):
-    pass
-
-
 class Application(models.Model):
     participant = models.ForeignKey(
         Participant,
@@ -90,7 +76,7 @@ class Application(models.Model):
             )
         ]
 
-    objects = ApplicationManager()
+    objects = ApplicationQuerySet.as_manager()
 
     def __str__(self) -> str:
         return f"Application #{self.pk}"

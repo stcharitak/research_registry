@@ -103,7 +103,7 @@ Then configure the .env file with your environment-specific values (e.g. databas
 3. Start everything (build, migrate, init roles, seed data):
 
 ```bash
-make run
+make up
 ```
 
 API base URL after startup:
@@ -116,7 +116,7 @@ http://localhost:8000/api/
 Using Makefile:
 
 ```bash
-make run        # full setup
+make up        # full setup
 make test       # run tests + coverage
 make test-fast  # run tests without coverage
 make lint       # lint code (ruff)

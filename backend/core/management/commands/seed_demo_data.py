@@ -1,15 +1,13 @@
 import json
 from pathlib import Path
 
+from accounts.models import Role
+from applications.models import Application
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
-
-from accounts.models import Role
-from applications.models import Application
 from participants.models import Participant
 from studies.models import Study
-
 
 BASE_DIR = Path(settings.BASE_DIR)
 SEED_DIR = BASE_DIR / "core" / "seed_data"
@@ -23,7 +21,7 @@ def load_json(name):
 class Command(BaseCommand):
     help = "Seed demo data from JSON"
 
-    def handle(self, *args, **kwargs):
+    def handle(self, *_args, **_kwargs):
         User = get_user_model()
 
         for data in load_json("users.json"):

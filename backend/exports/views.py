@@ -29,7 +29,7 @@ class ExportJobViewSet(
             return ExportJobCreateSerializer
         return ExportJobReadSerializer
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *_args, **_kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -46,6 +46,7 @@ class ExportJobViewSet(
 
     @action(detail=True, methods=["get"], url_path="download")
     def download(self, request, pk=None):
+        _ = request, pk
         job = self.get_object()
 
         if job.status != ExportJobStatus.COMPLETED or not job.file:
