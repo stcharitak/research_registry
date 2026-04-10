@@ -1,13 +1,13 @@
+from core.permissions import CanAccessApplication
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from applications.services import ApplicationService
 
-from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
-from core.permissions import CanAccessApplication
-from rest_framework.decorators import action
-from rest_framework.response import Response
 from .filters import ApplicationFilter
-from rest_framework import status
+from .serializers import ApplicationReadSerializer, ApplicationWriteSerializer
 
 
 class ApplicationViewSet(ModelViewSet):
